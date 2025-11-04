@@ -1,3 +1,9 @@
+# SQLite database files
+*.db
+*.db-journal
+syslogs.db
+test_syslogs.db
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]

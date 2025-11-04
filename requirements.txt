@@ -1,0 +1,7 @@
+flask
+elasticsearch>=7.0.0
+sqlalchemy
+python-dateutil
+pytz
+pytest
+requests
