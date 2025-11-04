@@ -34,8 +34,12 @@ async def process_message(raw, src_ip, storage, analyzer, alerting):
     if key in RECENT_MSGS:
         return
     RECENT_MSGS.add(key)
+    # Limit cache size - remove oldest when exceeding limit
     if len(RECENT_MSGS) > 10000:
-        RECENT_MSGS.pop()
+        # Create new set with recent items to maintain reasonable size
+        oldest = list(RECENT_MSGS)[:5000]
+        for item in oldest:
+            RECENT_MSGS.discard(item)
 
     ts = datetime.utcnow().isoformat() + 'Z'
     normalized = normalize_syslog(raw, src_ip, ts)

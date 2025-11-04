@@ -28,7 +28,7 @@ INDEX_HTML = '''
     <thead><tr><th>TS</th><th>IP</th><th>Type</th><th>Host</th><th>Raw</th></tr></thead>
     <tbody>
     {% for r in rows %}
-      <tr><td>{{r.ts}}</td><td>{{r.src_ip}}</td><td>{{r.event_type}}</td><td>{{r.host}}</td><td><code>{{r.raw}}</code></td></tr>
+      <tr><td>{{r.ts|e}}</td><td>{{r.src_ip|e}}</td><td>{{r.event_type|e}}</td><td>{{r.host|e}}</td><td><code>{{r.raw|e}}</code></td></tr>
     {% endfor %}
     </tbody>
   </table>
@@ -50,4 +50,4 @@ def api_search():
     return jsonify(rows)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=False)

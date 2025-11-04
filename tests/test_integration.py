@@ -6,6 +6,7 @@ import sys
 import os
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 
+import sqlite3
 from collector.parser import normalize_syslog
 from collector.storage import Storage
 from collector.analyzer import Analyzer
@@ -38,7 +39,7 @@ def test_storage():
     
     # Use SQLite for testing
     storage = Storage(es_host='http://invalid:9999')
-    storage.conn = storage.conn or __import__('sqlite3').connect('test_syslogs.db', check_same_thread=False)
+    storage.conn = storage.conn or sqlite3.connect('test_syslogs.db', check_same_thread=False)
     storage._init_sqlite()
     
     # Create a test document
