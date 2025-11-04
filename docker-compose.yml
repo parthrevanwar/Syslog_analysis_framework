@@ -1,0 +1,31 @@
+version: '3.8'
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.0
+    environment:
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ports:
+      - 9200:9200
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+
+  collector:
+    build: .
+    command: python collector/main.py --udp-port 5514 --tcp-port 5514
+    depends_on:
+      - elasticsearch
+    ports:
+      - 5514:5514/udp
+      - 5514:5514
+
+  webapp:
+    build: .
+    command: python webapp/app.py
+    depends_on:
+      - collector
+    ports:
+      - 5000:5000
+
+volumes:
+  esdata:
